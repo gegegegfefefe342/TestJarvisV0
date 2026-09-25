@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J.A.R.V.I.S. v0</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ APP ============ -->
+  <div id="app">
+
+    <!-- ============ TOPBAR ============ -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>J.A.R.V.I.S.</h1>
+          <p class="subtitle">v0 · browser-only assistant</p>
+        </div>
+      </div>
+
+      <!-- Orologio in tempo reale -->
+      <div class="clock">
+        <div id="clock-time">--:--:--</div>
+        <div id="clock-date">— — —</div>
+      </div>
+
+      <button id="settings-btn" class="icon-btn" title="Impostazioni">⚙</button>
+    </header>
+
+    <!-- ============ MAIN GRID ============ -->
+    <main class="main-grid">
+
+      <!-- ===== Colonna sinistra: dashboard ===== -->
+      <section class="left-panel">
+
+        <!-- Arc reactor animato -->
+        <div class="reactor" id="reactor">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+          <div class="core"></div>
+        </div>
+
+        <!-- Stato sistema -->
+        <div class="status-panel">
+          <div class="status-row">
+            <span>STATUS</span><span id="status-text" class="ok">ONLINE</span>
+          </div>
+          <div class="status-row">
+            <span>VOICE</span><span id="voice-status">OFF</span>
+          </div>
+          <div class="status-row">
+            <span>MEMORY</span><span id="memory-count">0 msg</span>
+          </div>
+          <div class="status-row">
+            <span>BRAIN</span><span id="brain-mode">LOCAL</span>
+          </div>
+        </div>
+
+        <button id="history-toggle" class="ghost-btn">📜 Cronologia</button>
+        <button id="clear-btn" class="ghost-btn danger">🗑 Pulisci memoria</button>
+      </section>
+
+      <!-- ===== Colonna centrale: chat ===== -->
+      <section class="chat-panel">
+        <div id="chat" class="chat" aria-live="polite"></div>
+
+        <form id="chat-form" class="chat-form" autocomplete="off">
+          <button type="button" id="mic-btn" class="mic-btn" title="Tieni premuto per parlare">🎤</button>
+          <input id="chat-input" type="text" placeholder="Scrivi un comando... (es. 'che ore sono')" />
+          <button type="submit" class="send-btn" title="Invia">➤</button>
+        </form>
+      </section>
+
+      <!-- ===== Colonna destra: cronologia (nascosta di default) ===== -->
+      <aside id="history-panel" class="history-panel hidden">
+        <h2>Cronologia</h2>
+        <div id="history-list" class="history-list"></div>
+      </aside>
+    </main>
+
+    <!-- ============ MODAL IMPOSTAZIONI ============ -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>⚙ Impostazioni</h2>
+
+        <label class="field">
+          <span>Provider AI</span>
+          <select id="provider-select">
+            <option value="local">🧠 Locale (a regole, senza API)</option>
+            <option value="openrouter">🌐 OpenRouter (free tier)</option>
+            <option value="groq">⚡ Groq (free tier)</option>
+          </select>
+        </label>
+
+        <label class="field" id="api-key-field">
+          <span>API Key</span>
+          <input id="api-key-input" type="password" placeholder="sk-..." />
+        </label>
+
+        <label class="field" id="model-field">
+          <span>Modello</span>
+          <input id="model-input" type="text" placeholder="meta-llama/llama-3.1-8b-instruct:free" />
+        </label>
+
+        <label class="field checkbox">
+          <input type="checkbox" id="tts-toggle" />
+          <span>Attiva voce in uscita (Text-to-Speech)</span>
+        </label>
+
+        <label class="field">
+          <span>Lingua voce</span>
+          <select id="lang-select">
+            <option value="it-IT">Italiano</option>
+            <option value="en-US">English (US)</option>
+          </select>
+        </label>
+
+        <p class="hint">
+          La API key è salvata solo nel tuo browser (localStorage).
+          Non condividerla pubblicando questa pagina con la chiave inserita.
+        </p>
+
+        <div class="modal-actions">
+          <button id="close-settings" class="ghost-btn">Chiudi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
